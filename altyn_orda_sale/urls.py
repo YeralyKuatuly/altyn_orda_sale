@@ -44,7 +44,7 @@ urlpatterns = [
         name='redoc'
     ),
     path('api/accounts/', include('accounts.urls')),
-    # path('api/inventory/', include('inventory.urls')),
+    path('api/inventory/', include('inventory.urls')),
     # path('api/orders/', include('orders.urls')),
     # path('api/payments/', include('payments.urls')),
     # path('api/delivery/', include('delivery.urls')),

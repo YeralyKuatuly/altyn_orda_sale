@@ -116,6 +116,7 @@ SPECTACULAR_SETTINGS = {
     'TAGS': [
         {'name': 'auth', 'description': 'Authentication endpoints'},
         {'name': 'accounts', 'description': 'Operations about users'},
+        {'name': 'Inventory', 'description': 'Manage product inventory, categories, and stock'},
         # ... other tags
     ],
 }

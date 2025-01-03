@@ -53,7 +53,7 @@ class UserSerializer(serializers.ModelSerializer):
             'addresses',
             'roles',
             # Temporarily remove until migration is fixed
-            # 'is_telegram_user'
+            'is_telegram_user'
         ]
         extra_kwargs = {
             'password': {'write_only': True}

@@ -26,6 +26,8 @@ var/
 db.sqlite3
 media/
 static/
+accounts/migrations/
+inventory/migrations/
 local_settings.py
 
 # Virtual Environment
