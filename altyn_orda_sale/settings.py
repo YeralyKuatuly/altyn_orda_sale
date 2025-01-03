@@ -117,6 +117,7 @@ SPECTACULAR_SETTINGS = {
         {'name': 'auth', 'description': 'Authentication endpoints'},
         {'name': 'accounts', 'description': 'Operations about users'},
         {'name': 'Inventory', 'description': 'Manage product inventory, categories, and stock'},
+        {'name': 'Orders', 'description': 'Manage orders, order items, and order change history'},
         # ... other tags
     ],
 }

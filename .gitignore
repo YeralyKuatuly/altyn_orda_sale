@@ -28,6 +28,7 @@ media/
 static/
 accounts/migrations/
 inventory/migrations/
+orders/migrations/
 local_settings.py
 
 # Virtual Environment

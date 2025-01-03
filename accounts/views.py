@@ -18,12 +18,14 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.permissions import IsAuthenticated
 
 
 @extend_schema(tags=['accounts'])
 class UserViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]  # Add this line
 
     @action(detail=True, methods=['post'], permission_classes=[])
     def assign_role(self, request, pk=None):

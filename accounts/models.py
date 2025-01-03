@@ -6,15 +6,9 @@ from django.db import models
 class User(AbstractUser):
     phone_number = models.CharField(max_length=15, unique=True, null=True, blank=True, db_index=True)
     telegram_id = models.CharField(max_length=50, unique=True, null=True, blank=True, db_index=True)
-
-    # Make password optional
     password = models.CharField(max_length=128, null=True, blank=True)
-
-    # Optional fields for Telegram users
     email = models.EmailField(null=True, blank=True)
     username = models.CharField(max_length=150, unique=True, null=True, blank=True, db_index=True)
-
-    # Add default value for existing records
     is_telegram_user = models.BooleanField(default=False, db_index=True)
 
     DEFAULT_PASSWORD = "telegram_user_default_password"
@@ -29,6 +23,13 @@ class User(AbstractUser):
             self.username = self.telegram_id or self.phone_number or f"user_{self.id}"
 
         super().save(*args, **kwargs)
+
+    def set_password(self, raw_password):
+        """Override set_password to handle None/empty passwords"""
+        if raw_password is None:
+            self.password = None
+        else:
+            super().set_password(raw_password)
 
     class Meta:
         db_table = 'users'
