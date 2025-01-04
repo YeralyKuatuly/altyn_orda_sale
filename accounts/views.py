@@ -121,11 +121,11 @@ def test_db_connection(request):
 @permission_classes([AllowAny])
 def telegram_login(request):
     telegram_id = request.data.get('telegram_id')
-    
+
     try:
         user = User.objects.get(telegram_id=telegram_id)
         refresh = RefreshToken.for_user(user)
-        
+
         return Response({
             'refresh': str(refresh),
             'access': str(refresh.access_token),

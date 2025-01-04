@@ -6,7 +6,6 @@ from decimal import Decimal
 from django.contrib.auth import get_user_model
 from inventory.models import Category, Product
 from .models import Order, OrderItem, OrderChangeHistory
-from .serializers import OrderSerializer
 
 User = get_user_model()
 

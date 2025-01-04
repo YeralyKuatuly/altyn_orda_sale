@@ -2,13 +2,14 @@ from rest_framework import serializers
 from decimal import Decimal
 from .models import Order, OrderItem, OrderChangeHistory
 
+
 class OrderItemSerializer(serializers.ModelSerializer):
     product_name = serializers.ReadOnlyField(source='product.name')
-    
+
     class Meta:
         model = OrderItem
         fields = ['id', 'product', 'product_name', 'quantity', 'price']
-        
+
     def validate(self, data):
         if data['quantity'] <= 0:
             raise serializers.ValidationError({"quantity": "Quantity must be positive"})
@@ -16,9 +17,10 @@ class OrderItemSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({"price": "Price must be positive"})
         return data
 
+
 class OrderChangeHistorySerializer(serializers.ModelSerializer):
     changed_by_username = serializers.ReadOnlyField(source='changed_by.username')
-    
+
     class Meta:
         model = OrderChangeHistory
         fields = [
@@ -33,6 +35,7 @@ class OrderChangeHistorySerializer(serializers.ModelSerializer):
         ]
         read_only_fields = ['changed_at', 'changed_by']
 
+
 class OrderSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many=True)
     total_price = serializers.DecimalField(
@@ -44,7 +47,7 @@ class OrderSerializer(serializers.ModelSerializer):
         default=serializers.CurrentUserDefault()
     )
     change_history = OrderChangeHistorySerializer(
-        many=True, 
+        many=True,
         read_only=True
     )
 
@@ -91,7 +94,7 @@ class OrderSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Cannot modify completed orders")
 
         items_data = validated_data.pop('items', None)
-        
+
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
 

@@ -1,5 +1,5 @@
 from rest_framework import permissions
-from .models import Order, OrderItem  
+from .models import Order, OrderItem
 
 
 class IsOrderOwnerOrStaff(permissions.BasePermission):

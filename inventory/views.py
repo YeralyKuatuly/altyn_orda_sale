@@ -8,8 +8,8 @@ from rest_framework.permissions import IsAuthenticated
 @extend_schema(tags=["Inventory"])
 class CategoryViewSet(ModelViewSet):
     """
-    Handles operations related to product categories, including retrieval of categories
-    and their hierarchical relationships (subcategories).
+    Handles operations related to product categories, including retrieval of 
+    categories and their hierarchical relationships (subcategories).
     """
     queryset = Category.objects.prefetch_related('subcategories').all()
     serializer_class = CategorySerializer
@@ -18,9 +18,10 @@ class CategoryViewSet(ModelViewSet):
     @extend_schema(
         summary="List all categories and subcategories",
         description=(
-            "Retrieve all categories along with their hierarchical subcategories. "
-            "The response includes the parent-child relationship, where each category "
-            "can have multiple subcategories. Top-level categories will have `null` "
+            "Retrieve all categories along with their hierarchical "
+            "subcategories. The response includes the parent-child "
+            "relationship, where each category can have multiple "
+            "subcategories. Top-level categories will have `null` "
             "as their parent category."
         ),
         responses={200: CategorySerializer(many=True)},
@@ -59,8 +60,8 @@ class CategoryViewSet(ModelViewSet):
     @extend_schema(
         summary="Retrieve a single category with its subcategories",
         description=(
-            "Retrieve detailed information about a single category, including its "
-            "subcategories and their hierarchical structure."
+            "Retrieve detailed information about a single category, "
+            "including its subcategories and their hierarchical structure."
         ),
         responses={200: CategorySerializer},
         examples=[
@@ -102,8 +103,9 @@ class ProductViewSet(ModelViewSet):
     @extend_schema(
         summary="List all products",
         description=(
-            "Retrieve all products available in the inventory. Optionally, filter the "
-            "products by a specific category or subcategory using the `category_id` query parameter."
+            "Retrieve all products available in the inventory. Optionally, "
+            "filter the products by a specific category or subcategory using "
+            "the `category_id` query parameter."
         ),
         parameters=[
             OpenApiExample(
@@ -156,8 +158,8 @@ class ProductViewSet(ModelViewSet):
     @extend_schema(
         summary="Retrieve a single product",
         description=(
-            "Retrieve detailed information about a single product, including its "
-            "category and stock information."
+            "Retrieve detailed information about a single product, including "
+            "its category and stock information."
         ),
         responses={200: ProductSerializer},
         examples=[

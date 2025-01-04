@@ -29,6 +29,7 @@ static/
 accounts/migrations/
 inventory/migrations/
 orders/migrations/
+delivery/migrations/
 local_settings.py
 
 # Virtual Environment

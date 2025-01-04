@@ -4,6 +4,7 @@ from django.utils.crypto import get_random_string
 from inventory.models import Product
 from accounts.models import User
 
+
 class Order(models.Model):
     STATUS_CHOICES = [
         ('pending', 'Pending'),
@@ -66,15 +67,16 @@ class Order(models.Model):
         db_table = 'orders'
         ordering = ['-created_at']
 
+
 class OrderItem(models.Model):
     order = models.ForeignKey(
-        Order, 
+        Order,
         on_delete=models.CASCADE, 
         related_name="items",
         help_text='Ссылка на заказ'
     )
     product = models.ForeignKey(
-        Product, 
+        Product,
         on_delete=models.CASCADE, 
         related_name="order_items",
         help_text='Ссылка на товар'
@@ -96,6 +98,7 @@ class OrderItem(models.Model):
     class Meta:
         db_table = 'order_items'
 
+
 class OrderChangeHistory(models.Model):
     order = models.ForeignKey(
         Order, 
@@ -104,9 +107,9 @@ class OrderChangeHistory(models.Model):
         help_text='Ссылка на заказ'
     )
     changed_by = models.ForeignKey(
-        User, 
+        User,
         on_delete=models.SET_NULL, 
-        null=True, 
+        null=True,
         related_name="order_changes",
         help_text='Ссылка на пользователя, который внёс изменения'
     )
@@ -115,12 +118,12 @@ class OrderChangeHistory(models.Model):
         help_text='Изменённое поле (status, address, courier)'
     )
     old_value = models.TextField(
-        null=True, 
+        null=True,
         blank=True,
         help_text='Старое значение поля'
     )
     new_value = models.TextField(
-        null=True, 
+        null=True,
         blank=True,
         help_text='Новое значение поля'
     )

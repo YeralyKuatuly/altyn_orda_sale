@@ -12,6 +12,7 @@ from .serializers import (
 )
 from .permissions import IsOrderOwnerOrStaff, IsStaffOrReadOnly
 
+
 @extend_schema(tags=["Orders"])
 class OrderViewSet(viewsets.ModelViewSet):
     serializer_class = OrderSerializer
@@ -30,7 +31,7 @@ class OrderViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['patch'], url_path='change-status')
     def change_status(self, request, pk=None):
         order = self.get_object()
-        
+
         if not request.user.is_staff:
             return Response(
                 {"error": "Only staff can change order status."}, 
