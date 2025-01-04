@@ -1,31 +1,62 @@
+# inventory/tests/test_models.py
 from django.test import TestCase
+from decimal import Decimal
 from inventory.models import Category, Product, Stock
 
 
-class CategoryModelTest(TestCase):
-    def test_create_category(self):
-        category = Category.objects.create(name="Electronics")
-        self.assertEqual(category.name, "Electronics")
-        self.assertIsNotNone(category.created_at)
-
-
-class ProductModelTest(TestCase):
-    def test_create_product(self):
-        category = Category.objects.create(name="Electronics")
-        product = Product.objects.create(
-            name="Smartphone", description="A new smartphone", price=999.99, stock=10, category=category
+class CategoryModelTests(TestCase):
+    def setUp(self):
+        self.parent_category = Category.objects.create(name="Food")
+        self.child_category = Category.objects.create(
+            name="Fruits",
+            parent_category=self.parent_category
         )
-        self.assertEqual(product.name, "Smartphone")
-        self.assertEqual(product.price, 999.99)
-        self.assertEqual(product.stock, 10)
-        self.assertEqual(product.category, category)
+
+    def test_category_str_representation(self):
+        """Test the string representation of Category model"""
+        self.assertEqual(str(self.parent_category), "Food")
+        self.assertEqual(str(self.child_category), "Food -> Fruits")
+
+    def test_category_creation(self):
+        """Test category creation and relationships"""
+        self.assertEqual(self.child_category.parent_category, self.parent_category)
+        self.assertTrue(self.parent_category.subcategories.filter(id=self.child_category.id).exists())
 
 
-class StockModelTest(TestCase):
-    def test_create_stock(self):
-        category = Category.objects.create(name="Electronics")
-        product = Product.objects.create(name="Smartphone", price=999.99, stock=10, category=category)
-        stock = Stock.objects.create(product=product, quantity=50, location="Warehouse A")
-        self.assertEqual(stock.product, product)
-        self.assertEqual(stock.quantity, 50)
-        self.assertEqual(stock.location, "Warehouse A")
+class ProductModelTests(TestCase):
+    def setUp(self):
+        self.category = Category.objects.create(name="Electronics")
+        self.product = Product.objects.create(
+            name="Laptop",
+            description="A powerful laptop",
+            price=Decimal("999.99"),
+            stock=10,
+            category=self.category
+        )
+
+    def test_product_str_representation(self):
+        """Test the string representation of Product model"""
+        self.assertEqual(str(self.product), "Laptop")
+
+    def test_product_price_precision(self):
+        """Test that price field maintains decimal precision"""
+        self.assertEqual(self.product.price, Decimal("999.99"))
+
+
+class StockModelTests(TestCase):
+    def setUp(self):
+        self.category = Category.objects.create(name="Electronics")
+        self.product = Product.objects.create(
+            name="Laptop",
+            price=Decimal("999.99"),
+            category=self.category
+        )
+        self.stock = Stock.objects.create(
+            product=self.product,
+            quantity=50,
+            location="Warehouse A"
+        )
+
+    def test_stock_str_representation(self):
+        """Test the string representation of Stock model"""
+        self.assertEqual(str(self.stock), "Laptop - 50")
