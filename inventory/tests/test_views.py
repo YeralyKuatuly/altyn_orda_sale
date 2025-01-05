@@ -1,7 +1,7 @@
 from django.urls import reverse
 from rest_framework import status
 from decimal import Decimal
-from inventory.models import Category, Product, Stock
+from inventory.models import Category, Product, Stock, Warehouse, WarehouseLog
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import get_user_model
 from rest_framework.test import APITestCase
@@ -134,3 +134,82 @@ class StockViewTests(AuthenticatedAPITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Stock.objects.count(), 2)
         self.assertEqual(Stock.objects.latest('id').location, "Warehouse C")
+
+
+class WarehouseViewTests(AuthenticatedAPITestCase):
+    def setUp(self):
+        super().setUp()
+        self.category = Category.objects.create(name="Electronics")
+        self.product = Product.objects.create(
+            name="Laptop",
+            price=Decimal("999.99"),
+            category=self.category
+        )
+        self.warehouse = Warehouse.objects.create(
+            name="Main Warehouse",
+            address="123 Storage St",
+            product=self.product,
+            quantity=50
+        )
+
+    def test_warehouse_list(self):
+        """Test warehouse list endpoint"""
+        url = reverse('warehouse-list')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 1)
+
+    def test_create_warehouse(self):
+        """Test creating a new warehouse"""
+        url = reverse('warehouse-list')
+        data = {
+            'name': 'Secondary Warehouse',
+            'address': '456 Storage St',
+            'product': self.product.id,
+            'quantity': 25
+        }
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Warehouse.objects.count(), 2)
+
+
+class WarehouseLogViewTests(AuthenticatedAPITestCase):
+    def setUp(self):
+        super().setUp()
+        self.category = Category.objects.create(name="Electronics")
+        self.product = Product.objects.create(
+            name="Laptop",
+            price=Decimal("999.99"),
+            category=self.category
+        )
+
+    def test_create_warehouse_log(self):
+        """Test creating warehouse logs"""
+        url = reverse('warehouse-log-list')  # Changed from warehouselog-list
+        data = {
+            'product': self.product.id,
+            'quantity': 10,
+            'operation_type': 'arrival'
+        }
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(WarehouseLog.objects.count(), 1)
+
+    def test_list_warehouse_logs(self):
+        """Test listing warehouse logs"""
+        # Create some test logs
+        WarehouseLog.objects.create(
+            product=self.product,
+            quantity=10,
+            operation_type='arrival'
+        )
+        WarehouseLog.objects.create(
+            product=self.product,
+            quantity=5,
+            operation_type='expense'
+        )
+
+        url = reverse('warehouse-log-list')  # Changed from warehouselog-list
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 2)

@@ -2,7 +2,7 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from .models import (
     User, Role, Permission, RolePermission,
-    UserRole, UserAddress
+    UserRole, UserAddress, Client
 )
 
 
@@ -62,4 +62,19 @@ class UserSerializer(serializers.ModelSerializer):
     def validate_telegram_id(self, value):
         if User.objects.filter(telegram_id=value).exists():
             raise ValidationError("This Telegram ID is already registered.")
+        return value
+
+
+class ClientSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    user_id = serializers.IntegerField(write_only=True)
+
+    class Meta:
+        model = Client
+        fields = ['id', 'user', 'user_id', 'created_at']
+        read_only_fields = ['created_at']
+
+    def validate_user_id(self, value):
+        if Client.objects.filter(user_id=value).exists():
+            raise serializers.ValidationError("A client with this user already exists.")
         return value

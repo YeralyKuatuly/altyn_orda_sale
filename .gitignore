@@ -30,6 +30,8 @@ accounts/migrations/
 inventory/migrations/
 orders/migrations/
 delivery/migrations/
+payments/migrations
+procurement/migrations
 local_settings.py
 
 # Virtual Environment

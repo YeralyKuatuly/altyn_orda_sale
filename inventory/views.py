@@ -1,7 +1,7 @@
 from drf_spectacular.utils import extend_schema, OpenApiExample
 from rest_framework.viewsets import ModelViewSet
-from .models import Category, Product, Stock
-from .serializers import CategorySerializer, ProductSerializer, StockSerializer
+from .models import Category, Product, Stock, Warehouse, WarehouseLog
+from .serializers import CategorySerializer, ProductSerializer, StockSerializer, WarehouseSerializer, WarehouseLogSerializer
 from rest_framework.permissions import IsAuthenticated
 
 
@@ -220,3 +220,17 @@ class StockViewSet(ModelViewSet):
     )
     def update(self, request, *args, **kwargs):
         return super().update(request, *args, **kwargs)
+
+
+@extend_schema(tags=["Inventory"])
+class WarehouseViewSet(ModelViewSet):
+    queryset = Warehouse.objects.all()
+    serializer_class = WarehouseSerializer
+    permission_classes = [IsAuthenticated]
+
+
+@extend_schema(tags=["Inventory"])
+class WarehouseLogViewSet(ModelViewSet):
+    queryset = WarehouseLog.objects.all()
+    serializer_class = WarehouseLogSerializer
+    permission_classes = [IsAuthenticated]

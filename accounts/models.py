@@ -80,3 +80,25 @@ class UserAddress(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.address}"
+
+
+class Client(models.Model):
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        related_name='client_profile',
+        help_text='Ссылка на пользователя из таблицы users'
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        help_text='Дата регистрации'
+    )
+
+    class Meta:
+        db_table = 'clients'
+        constraints = [
+            models.UniqueConstraint(fields=['user'], name='unique_user_client')
+        ]
+
+    def __str__(self):
+        return f"Client: {self.user.username}"

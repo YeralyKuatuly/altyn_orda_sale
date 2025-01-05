@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Courier, Delivery, DeliveryStatusHistory
+from .models import Courier, Delivery, DeliveryStatusHistory, DeliveryLog, CourierDeliveryHistory
 from accounts.serializers import UserSerializer
 
 
@@ -54,3 +54,16 @@ class DeliverySerializer(serializers.ModelSerializer):
         if courier_id:
             validated_data['courier'] = Courier.objects.get(id=courier_id)
         return super().update(instance, validated_data)
+
+
+class DeliveryLogSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DeliveryLog
+        fields = ['id', 'delivery', 'message', 'created_at']
+        read_only_fields = ['created_at']
+
+
+class CourierDeliveryHistorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CourierDeliveryHistory
+        fields = ['id', 'courier', 'order', 'delivered_at']

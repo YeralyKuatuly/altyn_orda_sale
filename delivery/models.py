@@ -35,6 +35,10 @@ class Courier(models.Model):
         default='available',
         help_text='Статус курьера'
     )
+    delivered_orders_count = models.IntegerField(
+        default=0,
+        help_text='Количество доставленных заказов'
+    )
     phone = models.CharField(
         max_length=15,
         help_text='Контактный телефон курьера'
@@ -159,3 +163,49 @@ class DeliveryStatusHistory(models.Model):
     class Meta:
         db_table = 'delivery_status_history'
         ordering = ['-created_at']
+
+
+class DeliveryLog(models.Model):
+    delivery = models.ForeignKey(
+        Delivery,
+        on_delete=models.CASCADE,
+        related_name='logs',
+        help_text='Ссылка на доставку'
+    )
+    message = models.TextField(
+        help_text='Сообщение о проблеме или событии'
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        help_text='Дата и время записи'
+    )
+
+    def __str__(self):
+        return f"Log for delivery #{self.delivery.id}"
+
+    class Meta:
+        db_table = 'delivery_logs'
+
+
+class CourierDeliveryHistory(models.Model):
+    courier = models.ForeignKey(
+        Courier,
+        on_delete=models.CASCADE,
+        related_name='delivery_history',
+        help_text='Ссылка на курьера'
+    )
+    order = models.ForeignKey(
+        'orders.Order',
+        on_delete=models.CASCADE,
+        related_name='courier_deliveries',
+        help_text='Ссылка на доставленный заказ'
+    )
+    delivered_at = models.DateTimeField(
+        help_text='Дата доставки'
+    )
+
+    def __str__(self):
+        return f"Delivery by {self.courier.user.username} for order #{self.order.order_number}"
+
+    class Meta:
+        db_table = 'courier_delivery_history'

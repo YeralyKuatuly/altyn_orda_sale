@@ -2,7 +2,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
 from .models import (
     User, Role, Permission, RolePermission,
-    UserRole, UserAddress
+    UserRole, UserAddress, Client
 )
 from .serializers import (
     UserSerializer,
@@ -10,7 +10,8 @@ from .serializers import (
     PermissionSerializer,
     RolePermissionSerializer,
     UserRoleSerializer,
-    UserAddressSerializer
+    UserAddressSerializer,
+    ClientSerializer
 )
 from drf_spectacular.utils import extend_schema, OpenApiExample
 from django.db import connection
@@ -132,3 +133,18 @@ def telegram_login(request):
         })
     except User.DoesNotExist:
         return Response({'error': 'User not found'}, status=404)
+    
+
+@extend_schema(tags=['accounts'])
+class ClientViewSet(ModelViewSet):
+    queryset = Client.objects.all()
+    serializer_class = ClientSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+    @action(detail=True, methods=['get'])
+    def profile(self, request, pk=None):
+        client = self.get_object()
+        return Response(self.get_serializer(client).data)

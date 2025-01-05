@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category, Product, Stock
+from .models import Category, Product, Stock, Warehouse, WarehouseLog
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -24,3 +24,15 @@ class StockSerializer(serializers.ModelSerializer):
     class Meta:
         model = Stock
         fields = '__all__'
+
+
+class WarehouseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Warehouse
+        fields = ['id', 'name', 'address', 'product', 'quantity', 'updated_at']
+
+
+class WarehouseLogSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WarehouseLog
+        fields = ['id', 'product', 'quantity', 'operation_type', 'created_at']

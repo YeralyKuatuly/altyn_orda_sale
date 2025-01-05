@@ -4,11 +4,13 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
 from drf_spectacular.utils import extend_schema, OpenApiExample
-from .models import Courier, Delivery, DeliveryStatusHistory
+from .models import Courier, Delivery, DeliveryStatusHistory, DeliveryLog, CourierDeliveryHistory
 from .serializers import (
     CourierSerializer,
     DeliverySerializer,
-    DeliveryStatusHistorySerializer
+    DeliveryStatusHistorySerializer,
+    DeliveryLogSerializer,
+    CourierDeliveryHistorySerializer
 )
 
 
@@ -98,4 +100,18 @@ class DeliveryViewSet(ModelViewSet):
 class DeliveryStatusHistoryViewSet(ModelViewSet):
     queryset = DeliveryStatusHistory.objects.all()
     serializer_class = DeliveryStatusHistorySerializer
+    permission_classes = [IsAuthenticated]
+
+
+@extend_schema(tags=['delivery'])
+class DeliveryLogViewSet(ModelViewSet):
+    queryset = DeliveryLog.objects.all()
+    serializer_class = DeliveryLogSerializer
+    permission_classes = [IsAuthenticated]
+
+
+@extend_schema(tags=['delivery'])
+class CourierDeliveryHistoryViewSet(ModelViewSet):
+    queryset = CourierDeliveryHistory.objects.all()
+    serializer_class = CourierDeliveryHistorySerializer
     permission_classes = [IsAuthenticated]

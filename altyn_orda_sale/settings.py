@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'payments',
     'delivery',
     'api',
+    'procurement',
     'rest_framework_simplejwt',
 ]
 
