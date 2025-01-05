@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.core.exceptions import ValidationError
-from .test_factories import PurchaserFactory, ProcurementFactory
+from .factories import PurchaserFactory, ProcurementFactory
 
 
 class PurchaserModelTest(TestCase):

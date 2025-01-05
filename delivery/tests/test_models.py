@@ -1,11 +1,11 @@
 from django.test import TestCase
 from django.core.exceptions import ValidationError
-from .test_factories import (
+from .factories import (
     UserFactory, CourierFactory,
     DeliveryFactory, DeliveryStatusHistoryFactory,
     DeliveryLogFactory, CourierDeliveryHistoryFactory
 )
-from orders.tests.test_factories import OrderFactory
+from orders.tests.factories import OrderFactory
 
 
 class CourierModelTest(TestCase):

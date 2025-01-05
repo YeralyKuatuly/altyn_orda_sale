@@ -1,7 +1,7 @@
 from django.urls import reverse
 from rest_framework.test import APITestCase
 from rest_framework import status
-from .test_factories import PurchaserFactory, ProcurementFactory, UserFactory
+from .factories import PurchaserFactory, ProcurementFactory, UserFactory
 
 
 class PurchaserViewSetTest(APITestCase):

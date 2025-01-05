@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .test_factories import PaymentProviderFactory, PaymentFactory, PaymentLogFactory, ReceiptFactory
+from .factories import PaymentProviderFactory, PaymentFactory, PaymentLogFactory, ReceiptFactory
 
 
 class PaymentProviderTest(TestCase):

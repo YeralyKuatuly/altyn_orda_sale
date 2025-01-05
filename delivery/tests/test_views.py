@@ -1,7 +1,7 @@
 from django.urls import reverse
 from rest_framework.test import APITestCase
 from rest_framework import status
-from .test_factories import (
+from .factories import (
     UserFactory, CourierFactory,
     DeliveryFactory, DeliveryStatusHistoryFactory,
     DeliveryLogFactory, CourierDeliveryHistoryFactory,

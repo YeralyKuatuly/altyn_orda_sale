@@ -3,8 +3,8 @@ from factory.django import DjangoModelFactory
 from django.utils import timezone
 from accounts.models import User
 from procurement.models import Purchaser, Procurement
-from inventory.tests.test_factories import ProductFactory, WarehouseFactory
-from delivery.tests.test_factories import CourierFactory  # You'll need to create this
+from inventory.tests.factories import ProductFactory, WarehouseFactory
+from delivery.tests.factories import CourierFactory  # You'll need to create this
 
 
 class UserFactory(DjangoModelFactory):

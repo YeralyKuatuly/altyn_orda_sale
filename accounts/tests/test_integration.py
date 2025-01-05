@@ -2,7 +2,7 @@ from django.urls import reverse
 from rest_framework.test import APITestCase
 from rest_framework import status
 from accounts.models import Client
-from .test_factories import UserFactory, ClientFactory
+from .factories import UserFactory, ClientFactory
 
 
 class ClientIntegrationTests(APITestCase):

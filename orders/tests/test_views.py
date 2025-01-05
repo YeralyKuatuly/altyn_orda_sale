@@ -2,7 +2,7 @@ from django.urls import reverse
 from rest_framework.test import APITestCase, APIClient
 from rest_framework import status
 from decimal import Decimal
-from .test_factories import (
+from .factories import (
     UserFactory, CategoryFactory,
     ProductFactory, OrderFactory,
     OrderItemFactory

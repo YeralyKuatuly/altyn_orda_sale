@@ -8,7 +8,7 @@ from .models import Purchaser, Procurement
 from .serializers import PurchaserSerializer, ProcurementSerializer
 
 
-@extend_schema(tags=['procurement'])
+@extend_schema(tags=['Procurement'])
 class PurchaserViewSet(ModelViewSet):
     queryset = Purchaser.objects.all()
     serializer_class = PurchaserSerializer
@@ -34,14 +34,13 @@ class PurchaserViewSet(ModelViewSet):
         return Response(stats)
 
 
-@extend_schema(tags=['procurement'])
+@extend_schema(tags=['Procurement'])
 class ProcurementViewSet(ModelViewSet):
     queryset = Procurement.objects.all()
     serializer_class = ProcurementSerializer
     permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
-        print("Received data:", request.data)  # Debug print
         return super().create(request, *args, **kwargs)
 
     def perform_create(self, serializer):

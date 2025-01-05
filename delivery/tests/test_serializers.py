@@ -6,7 +6,7 @@ from delivery.serializers import (
     DeliveryLogSerializer,
     CourierDeliveryHistorySerializer
 )
-from .test_factories import (
+from .factories import (
     UserFactory, CourierFactory,
     DeliveryFactory, DeliveryStatusHistoryFactory,
     DeliveryLogFactory, CourierDeliveryHistoryFactory

@@ -15,6 +15,5 @@ router.register(r'status-history', DeliveryStatusHistoryViewSet)
 router.register(r'delivery-logs', DeliveryLogViewSet, basename='delivery-log')
 router.register(r'courier-history', CourierDeliveryHistoryViewSet, basename='courier-history')
 
-urlpatterns = [
-    path('', include(router.urls)),
-]
+
+urlpatterns = router.urls

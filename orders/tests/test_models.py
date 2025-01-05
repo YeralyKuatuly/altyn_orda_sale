@@ -1,6 +1,6 @@
 from django.test import TestCase
 from decimal import Decimal
-from .test_factories import (
+from .factories import (
     UserFactory, CategoryFactory,
     ProductFactory, OrderFactory,
     OrderItemFactory

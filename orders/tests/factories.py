@@ -40,7 +40,7 @@ class OrderFactory(DjangoModelFactory):
     order_number = factory.Sequence(lambda n: f'ORD-{n:06}')
     user = factory.SubFactory('accounts.tests.factories.UserFactory')
     status = 'pending'
-    total_price = factory.Faker('pydecimal', left_digits=4, right_digits=2, positive=True)
+    total_price = factory.LazyFunction(lambda: Decimal('0.00'))
     delivery_address = factory.Faker('address')
 
     @factory.post_generation

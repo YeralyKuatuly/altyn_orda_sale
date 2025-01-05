@@ -22,7 +22,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
 
 
-@extend_schema(tags=['accounts'])
+@extend_schema(tags=['Accounts'])
 class UserViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -71,7 +71,7 @@ class UserViewSet(ModelViewSet):
         return super().list(request, *args, **kwargs)
 
 
-@extend_schema(tags=['accounts'])
+@extend_schema(tags=['Accounts'])
 class RoleViewSet(ModelViewSet):
     queryset = Role.objects.all()
     serializer_class = RoleSerializer
@@ -133,9 +133,9 @@ def telegram_login(request):
         })
     except User.DoesNotExist:
         return Response({'error': 'User not found'}, status=404)
-    
 
-@extend_schema(tags=['accounts'])
+
+@extend_schema(tags=['Accounts'])
 class ClientViewSet(ModelViewSet):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer

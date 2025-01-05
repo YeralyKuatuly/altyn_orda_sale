@@ -14,7 +14,7 @@ from .serializers import (
 )
 
 
-@extend_schema(tags=['delivery'])
+@extend_schema(tags=['Delivery'])
 class CourierViewSet(ModelViewSet):
     queryset = Courier.objects.all()
     serializer_class = CourierSerializer
@@ -43,7 +43,7 @@ class CourierViewSet(ModelViewSet):
         return Response({'error': 'invalid status'}, status=400)
 
 
-@extend_schema(tags=['delivery'])
+@extend_schema(tags=['Delivery'])
 class DeliveryViewSet(ModelViewSet):
     queryset = Delivery.objects.all()
     serializer_class = DeliverySerializer
@@ -96,21 +96,21 @@ class DeliveryViewSet(ModelViewSet):
         return Response({'status': 'courier assigned successfully'})
 
 
-@extend_schema(tags=['delivery'])
+@extend_schema(tags=['Delivery'])
 class DeliveryStatusHistoryViewSet(ModelViewSet):
     queryset = DeliveryStatusHistory.objects.all()
     serializer_class = DeliveryStatusHistorySerializer
     permission_classes = [IsAuthenticated]
 
 
-@extend_schema(tags=['delivery'])
+@extend_schema(tags=['Delivery'])
 class DeliveryLogViewSet(ModelViewSet):
     queryset = DeliveryLog.objects.all()
     serializer_class = DeliveryLogSerializer
     permission_classes = [IsAuthenticated]
 
 
-@extend_schema(tags=['delivery'])
+@extend_schema(tags=['Delivery'])
 class CourierDeliveryHistoryViewSet(ModelViewSet):
     queryset = CourierDeliveryHistory.objects.all()
     serializer_class = CourierDeliveryHistorySerializer

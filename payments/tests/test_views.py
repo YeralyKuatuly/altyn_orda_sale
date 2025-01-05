@@ -1,8 +1,8 @@
 from django.urls import reverse
 from rest_framework.test import APITestCase
 from rest_framework import status
-from .test_factories import PaymentProviderFactory, PaymentFactory, ReceiptFactory
-from accounts.tests.test_factories import UserFactory
+from .factories import PaymentProviderFactory, PaymentFactory, ReceiptFactory
+from accounts.tests.factories import UserFactory
 
 
 class PaymentViewSetTest(APITestCase):

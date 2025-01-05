@@ -115,11 +115,13 @@ SPECTACULAR_SETTINGS = {
         }
     },
     'TAGS': [
-        {'name': 'auth', 'description': 'Authentication endpoints'},
-        {'name': 'accounts', 'description': 'Operations about users'},
+        # {'name': 'auth', 'description': 'Authentication endpoints'},
+        {'name': 'Accounts', 'description': 'Operations about users'},
         {'name': 'Inventory', 'description': 'Manage product inventory, categories, and stock'},
         {'name': 'Orders', 'description': 'Manage orders, order items, and order change history'},
         {'name': 'Delivery', 'description': 'Manage deliveries, status history, and courier assignments'},
+        {'name': 'Procurement', 'description': 'Manage procurement, purchase orders, and supplier interactions'},
+        {'name': 'Payments', 'description': 'Manage payments, invoices, and payment processing'},
         # ... other tags
     ],
 }

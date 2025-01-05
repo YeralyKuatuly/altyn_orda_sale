@@ -1,6 +1,6 @@
 from django.test import TestCase
 from accounts.serializers import UserSerializer, ClientSerializer
-from .test_factories import UserFactory, ClientFactory
+from .factories import UserFactory, ClientFactory
 
 
 class UserSerializerTests(TestCase):

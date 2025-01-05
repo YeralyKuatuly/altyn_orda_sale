@@ -1,7 +1,7 @@
 import factory
 from factory.django import DjangoModelFactory
 from payments.models import PaymentProvider, Payment, PaymentLog, Receipt
-from orders.tests.test_factories import OrderFactory
+from orders.tests.factories import OrderFactory
 
 
 class PaymentProviderFactory(DjangoModelFactory):
